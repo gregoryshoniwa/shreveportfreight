@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Shreveport - Freight</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.ico">
+  </head>
+  <body>
+    
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index.html">
+			  <img src="images/logo.png" width="150" height="auto"/>
+		  </a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item active"><a href="#" class="nav-link">Home</a></li>
+	          <li class="nav-item"><a href="#services" class="nav-link">Services</a></li>
+	          <li class="nav-item"><a href="#how" class="nav-link">How it works</a></li>
+	          <li class="nav-item"><a href="#team" class="nav-link">Our Team</a></li>
+	          <li class="nav-item"><a href="#about" class="nav-link">About Us</a></li>
+	          <li class="nav-item"><a href="#contacts" class="nav-link">Contacts</a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+    
+    <div class="hero-wrap" style="background-image: url('images/bg.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text justify-content-start align-items-center">
+
+          <div class="col-lg-8 col-md-7 ftco-animate d-flex align-items-end">
+
+            
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="images/add1.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="images/add2.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="images/add3.jpg" class="d-block w-100" alt="...">
+                </div>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+           
+          </div>
+
+          <div class="col-lg-1 col"></div>
+          <div class="col-lg-3 col-md-4 mt-0 mt-md-5 d-flex">
+          	<div  class="request-form ftco-animate">
+              <h2>Request Estimate</h2>
+              <div class="form-group ">
+	    					<label for="" class="label">Your Email</label>
+	    					<input required id="email" type="text" class="form-control" placeholder="your@yourdomain.com">
+	    				</div>
+	    				<div class="form-group ">
+	    					<label for="" class="label">Item Description</label>
+	    					<textarea required id="items" style="min-width: 300px;min-height: 70px;" type="text" class="form-control" placeholder="Sony Smart TV Set, Quantity : 1, Personal use"></textarea>
+	    				</div>
+	    				<div class="form-group">
+	    					<label for="" class="label">Describe shipping from location</label>
+	    					<textarea required id="location" style="min-width: 300px;min-height: 70px;" type="text" class="form-control" placeholder="London, United Kingdom, Sony Shop Saver"></textarea>
+	    				</div>
+	    				
+	            <div class="form-group">
+	              <input type="button" onclick="sendEmail()" value="Send Request" class="btn btn-info py-3 px-4">
+	            </div>
+            </div>
+            
+            <script type="text/javascript">
+              function sendEmail(){
+               
+                var email = $("#email");
+                var items = $("#items");
+                var location = $("#location");
+
+                if(isNotEmpty(email) && isNotEmpty(items) && isNotEmpty(location)){
+                  $.ajax({
+                    url:'send.php',
+                    method:'POST',
+                    dataType:'json',
+                    data:{
+                      email:email.val(),
+                      subject: 'Website Estimate Request',
+                      body1: items.val(),
+                      body2:location.val()
+                    },
+                    success:function (res){
+                     
+                      if(res.res == "success"){
+                        document.getElementById('email').value = '';
+                        document.getElementById('items').value = '';
+                        document.getElementById('location').value = '';
+                        const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        
+                        onOpen: (toast) => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer)
+                          toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                      })
+
+                      Toast.fire({
+                        icon: 'success',
+                        title: 'Signed in successfully'
+                      })
+                      }
+                    }
+
+                  })
+                }
+              }
+              function isNotEmpty(params) {
+                //console.log(params)
+                if(params.val() == ""){
+                  Swal.fire(
+                    'Form Incomplete',
+                    'Please enter all the fields in the form.',
+                    'question'
+                  )
+                  return false;
+                }else{
+                  params.css('border','');
+                  return true;
+                }
+                
+              }
+
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+
+	<br id="services">	<br>	<br><br>
+    <section  class="ftco-section services-section ftco-no-pt ftco-no-pb">
+      <div class="container">
+      	<div class="row justify-content-center">
+          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+          	
+            <h2 class="mb-2">Our Services</h2>
+          </div>
+        </div>
+        <div class="row d-flex">
+          <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services">
+              <div class="media-body py-md-4 text-center">
+              	<div class="d-flex mb-3 align-items-center justify-content-center">
+	              	<div class="icon"><span class="flaticon-select"></span></div>
+	                <h3 class="heading mb-0 pl-3">Service Area</h3>
+                </div>
+				<p>Customs clearing <br>(all imports and exports)</p>
+				<p>Temporary Importation and Exportation of Goods.</p>
+				
+              </div>
+            </div>      
+          </div>
+		  <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services">
+              <div class="media-body py-md-4 text-center">
+              	<div class="d-flex mb-3 align-items-center justify-content-center">
+	              	<div class="icon"><span class="flaticon-select"></span></div>
+	                <h3 class="heading mb-0 pl-3">Service Area</h3>
+                </div>
+				<p>Freight Forwarding Services (Road freight, Sea Freight, and Air Freight)</p>
+				<p>Removal into Bond</p>
+				
+              </div>
+            </div>      
+          </div>
+          <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services">
+              <div class="media-body py-md-4 text-center">
+              	<div class="d-flex mb-3 align-items-center justify-content-center">
+	              	<div class="icon"><span class="flaticon-select"></span></div>
+	                <h3 class="heading mb-0 pl-3">Service Area</h3>
+                </div>
+				<p>Customs Consultancy</p>
+				<p>Commercial Vehicle Guarantees</p>
+				<p>Consignment tracking</p>
+				
+              </div>
+            </div>      
+          </div>
+          <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services">
+              <div class="media-body py-md-4 text-center">
+              	<div class="d-flex mb-3 align-items-center justify-content-center">
+	              	<div class="icon"><span class="flaticon-select"></span></div>
+	                <h3 class="heading mb-0 pl-3">Service Area</h3>
+                </div>
+				<p>Imports & Exports Monitoring</p>
+				<p>Removal in-transit</p>
+				<p>Warehousing</p>
+				
+              </div>
+            </div>      
+          </div>
+		  
+      </div>
+    </section>
+
+   <br>
+
+    <section id="how" class="ftco-section services-section img" style="background-image: url(images/bg_2.jpg);">
+    	<div class="overlay"></div>
+    	<div class="container">
+    		<div class="row justify-content-center mb-5">
+          <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+          	
+            <h2 class="mb-3">How it works</h2>
+          </div>
+        </div>
+    		<div class="row">
+    			<div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services services-2">
+              <div class="media-body py-md-4 text-center">
+              	<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-route"></span></div>
+                <h3>Order Registration</h3>
+                <p>Your consignment is registered by qualified agents</p>
+              </div>
+            </div>      
+          </div>
+          <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services services-2">
+              <div class="media-body py-md-4 text-center">
+              	<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-route"></span></div>
+                <h3>Order Estimate</h3>
+                <p>An itemized estimate is sent to the client in relation to the order items.</p>
+              </div>
+            </div>      
+          </div>
+          <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services services-2">
+              <div class="media-body py-md-4 text-center">
+              	<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-route"></span></div>
+                <h3>Order Clearing</h3>
+                <p>Constant communication is given to the client in line with their consignment at every stage of the clearing process, in order to track their items.</p>
+              </div>
+            </div>      
+          </div>
+          <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services services-2">
+              <div class="media-body py-md-4 text-center">
+              	<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-route"></span></div>
+                <h3>Collection</h3>
+                <p>On completion of all the clearing process the consignment will be ready for collection</p>
+              </div>
+            </div>      
+          </div>
+    		</div>
+    	</div>
+    </section>
+
+    <section id="team" class="ftco-section testimony-section">
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+          	
+            <h2 class="mb-3">DIRECTORATE AND MANAGEMENT</h2>
+          </div>
+        </div>
+        <div class="row ftco-animate">
+          <div class="col-md-12">
+            <div class="carousel-testimony owl-carousel ftco-owl">
+              <div class="item">
+                <div class="testimony-wrap text-center py-4 pb-5">
+                  <div class="user-img mb-4" style="background-image: url(images/avatar.jpg)">
+                  </div>
+                  <div class="text pt-4">
+                    <p class="mb-4">Edward holds a Bachelor of Commerce (Honours) Degree in Banking
+						and Finance from the Midlands State University (MSU) and aMasters’
+						in Business Administration from the University of Zimbabwe. He has
+						vast experience in the Banking and Microfinance Sector having served in
+						various managerial positions for over 10 years with TN Bank and Hammer
+						and Tongues Africa Holdings Group. Edward is a versatile player as he
+						has also found a fit in the imports and exports field and transport logistics
+						as he has been in charge of bonded warehouse operations and managing
+						imports and exports for Hammer and Tongues Africa Holdings and Africa
+						Gaming for over 5 years. Edward is based at the Head Office in Harare.</p>
+                    <p class="name">Edward Mbwera</p>
+                    <span class="position">Director-Strategy and Finance</span>
+                    <br>
+                    <span class="position">edward@shreveportfreight.co.zw</span>
+                    <br>
+                    <span class="position">+263 772 527 127</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap text-center py-4 pb-5">
+                  <div class="user-img mb-4" style="background-image: url(images/avatar.jpg)">
+                  </div>
+                  <div class="text pt-4">
+                    <p class="mb-4">Thomas is a respected, seasoned manager with over twenty six (26) years’ experience in shipping, logistics, and transport
+						business. He started his career with GDC Haulers in 1992 as Operations
+						border control. He left in 1997 to join one of the leading customs and
+						freight forwarding company in Zimbabwe- Walford Meadows as a
+						Beitbridge Branch Manager. In 2002 he joined CKD Clearing and
+						Forwarding as Branch Manager Forbes Border Post. He later joined
+						Freight World in 2012 as Operations Senior Clerk. Thomas holds a
+						Diploma in Shipping –SFAAZ. Thomas is based at Beitbridge office.</p>
+                    <p class="name">Thomas Chavunduka</p>
+                    <span class="position">Director-Operations</span>
+                    <br>
+                    <span class="position">thomas@shreveportfreight.co.zw</span>
+                    <br>
+                    <span class="position">+263 715 957 400</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap text-center py-4 pb-5">
+                  <div class="user-img mb-4" style="background-image: url(images/avatar.jpg)">
+                  </div>
+                  <div class="text pt-4">
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p class="name">Lawrence Nyakudziwanza</p>
+                    <span class="position">Managing Director</span>
+                    <br>
+                    <span class="position">lawrence@shreveportfreight.co.zw</span>
+                    <br>
+                    <span class="position">+263 713 757 117</span>
+                  </div>
+                </div>
+              </div>
+			  
+			  <!-- <div class="item">
+                <div class="testimony-wrap text-center py-4 pb-5">
+                  <div class="user-img mb-4" style="background-image: url(images/person_3.jpg)">
+                  </div>
+                  <div class="text pt-4">
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p class="name">Roger Scott</p>
+                    <span class="position">UI Designer</span>
+                  </div>
+                </div>
+              </div> -->
+              
+            </div>
+          </div>
+        </div>
+      </div>
+	</section>
+	
+	<section id="about" class="ftco-section">
+		<div class="container">
+		  <div class="row justify-content-center mb-1">
+			<div class="col-md-8  heading-section text-center ftco-animate">				
+			  <h2>SHREVEPORT INVESTMENTS (PRIVATE) LIMITED
+				T/A SHREVEPORT FREIGHT</h2>
+			</div>
+		  </div>
+		  <div class="row d-flex">
+			<div class="col-md-4 d-flex ftco-animate">
+				<div class="blog-entry justify-content-end">
+				<a href="blog-single.html" class="block-20" style="background-image: url('images/vision.png');">
+				</a>
+				<div class="text pt-4">
+					
+				  <h3 class="heading mt-2"><a href="#">VISION</a></h3>
+				  <p>To be a leading service provider in customs clearing, freight forwarding
+					and logistics services in Zimbabwe and beyond.</p>
+				</div>
+			  </div>
+			</div>
+			<div class="col-md-4 d-flex ftco-animate">
+				<div class="blog-entry justify-content-end">
+				<a href="blog-single.html" class="block-20" style="background-image: url('images/mission.jpg');">
+				</a>
+				<div class="text pt-4">
+					
+				  <h3 class="heading mt-2"><a href="#">MISSION</a></h3>
+				  <p>To be the preferred provider of efficient and cost effective solutions to all
+					customs clearing, freight forwarding services, transport & logistics and
+					business in general through qualified and well-motivated staff.
+					</p>
+				</div>
+			  </div>
+			</div>
+			<div class="col-md-4 d-flex ftco-animate">
+				<div class="blog-entry">
+				<a href="blog-single.html" class="block-20" style="background-image: url('images/values.jpg');">
+				</a>
+				<div class="text pt-4">
+					
+				  <h3 class="heading mt-2"><a href="#">ORGANIZATIONAL VALUES</a></h3>
+				  <p>We value the exhibition of a high degree of ethical and professional
+					conduct in a business set up characterized by confidentiality, honesty,
+					integrity and transparency.</p>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </section>	
+
+		<section class="ftco-section ftco-no-pt ftco-no-pb">
+			<div class="container">
+				<div class="row no-gutters">
+					<div class="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/about.jpg);">
+					</div>
+					<div class="col-md-6 wrap-about py-md-5 ftco-animate">
+	          <div class="heading-section mb-5 pl-md-5">
+				  <span class="subheading" style="font-size: large;">CORE VALUES</span>
+				  <p>• Trust</p>
+				  <p>• Integrity</p>
+				  <p>• Honesty</p>
+				  <p>• Value addition</p>
+				  <p>• Transparency</p>
+				  <p>• Teamwork</p>
+				  <p>• Professionalism</p>
+				  <br>
+	            <h2 class="mb-4">NATURE OF BUSINESS</h2>
+
+	            <p>Shreveport Investments (Pvt) Ltd T/A Shreveport Freight is a
+					Zimbabwean registered customs clearing company and a registered
+					member of the Zimbabwe Indigenous Freight Forwarders
+					Association (ZIFFA). Shreveport Freight is a vibrant company committed to
+					providing you with cost effective solutions to all customs
+					clearing, freight forwarding services, transport & logistics and business in
+					general. In terms of our standard “modus operandi”, we ensure the
+					timely clearance of our customers’ consignments as we make sure
+					to safeguard the customers’ interests as well as upholding the
+					government’s laws governing imports and exports. We also offer
+					consultancy on all customs matters, freight forwarding and transport and logistics. Moving cargo from
+					point of origin until point of destination is our business. </p>
+	            <p>The focus of the business has always been to maximise the competitive advantage of our clients by delivering cost effective and value adding
+					clearance service. We ensure smooth handling of cargo through our
+					 integrated branch network and associates. Our dedicated staff have vast
+					experience and expertise spanning over 20 years’ experience of service to
+					effectively handle the growing needs of customs clearing, freight forwarding
+					services and transport & logistics business in Zimbabwe and beyond. Our
+					highly experienced staff is fully conversant with customs procedures and is
+					obsessed with a passion for results both to our stakeholders and ourselves.</p>
+	            
+	          </div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+   	
+
+    <footer id="contacts" class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">About Shreveport</h2>
+              <p>Shreveport Freight is a vibrant company committed to providing you with cost effective solutions to all customs clearing, freight forwarding services, transport & logistics and business in general.</p>
+              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Information</h2>
+              <ul class="list-unstyled">
+                <li class="nav-item active"><a href="#" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#services" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="#how" class="nav-link">How it works</a></li>
+                <li class="nav-item"><a href="#team" class="nav-link">Our Team</a></li>
+                <li class="nav-item"><a href="#about" class="nav-link">About Us</a></li>
+               
+                
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+            	<h2 class="ftco-heading-2">Have a Questions?</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">Head Office : First Floor Nicoz House
+						Corner 1st Street/Nelson .Mandela Avenue Harare</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">0242-254319; 0772527127</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@shreveportfreight.co.zw</span></a></li>
+	              </ul>
+              </div>
+              <div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">Branches : 154 Wellington Road
+                    Beitbridge</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+263715957400; +263713757117</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@shreveportfreight.co.zw</span></a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+
+            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+    
+  </body>
+</html>
